@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Annee;
+use App\Models\Fichier;
+use App\Models\Tel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+class BackController extends Controller
+{
+
+    public function listepdf(){
+    $tels=Tel::All();
+    // dd($tel);
+    $Fichiers=Fichier::Orderby('annee_id','DESC')->get();
+    return view('BackOffice.index')->with(compact('Fichiers','tels'));
+    }
+
+
+    public function store(Request $request)
+{
+    $data = $request->except('pdf_btn');
+
+    $file = $request->file('pdf_btn');
+
+    if ($file) {
+        $ext = $file->getClientOriginalExtension();
+        $arr_ext = ['pdf'];
+
+        if (!file_exists(public_path('pdfs'))) {
+            mkdir(public_path('pdfs'), 0777, true);
+        }
+
+        if (in_array($ext, $arr_ext)) {
+            $name_with_extension = time() . '.' . $ext;
+            $file->move(public_path('pdfs'), $name_with_extension);
+
+            if (isset($data['url_file'])) {
+                if (file_exists(public_path($data['url_file']))) {
+                    unlink(public_path($data['url_file']));
+                }
+            }
+
+            $data['url_file'] = 'pdfs/' . $name_with_extension;
+        }
+    }
+
+    $fichier = new Fichier([
+        'theme' => $request->theme,
+        'auteur' => $request->auteur,
+        'dm' => $request->dm,
+        'filiere' => $request->filiere,
+        'user_id' => Auth::user()->id,
+        'annee_id' => $request->annee_id,
+        'pdf_file' => $data['url_file'], // Affecter le chemin du fichier PDF au champ pdf_file
+    ]);
+
+    $fichier->save();
+
+    return back();
+}
+
+}
