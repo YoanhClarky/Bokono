@@ -13,7 +13,7 @@ class listeController extends Controller
         return view('layout.app')->with(compact('Annees'));
     }
     public function listepdf($id){
-        $Fichiers=Fichier::where('annee_id',$id)->get();
+        $Fichiers=Fichier::where('annee_id',$id)->where('etat',1)->get();
         return view('FrontOffice.Pdf.index')->with(compact('Fichiers'));
     }
 }

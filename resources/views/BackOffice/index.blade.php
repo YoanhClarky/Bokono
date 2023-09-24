@@ -45,13 +45,13 @@ https://templatemo.com/tm-547-real-dynamic
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item active">
-                                        <a class="nav-link tm-nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+                                        <a class="nav-link tm-nav-link" href="/dashboards">Accueil <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="/create">Création</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="contact.html">Contactez-Nous</a>
+                                        <a class="nav-link tm-nav-link" href="/contact">Contactez-Nous</a>
                                     </li>
                                     @auth <!-- Vérifiez si l'utilisateur est connecté -->
                                     <li class="nav-item">
@@ -102,8 +102,8 @@ https://templatemo.com/tm-547-real-dynamic
                                     @endphp
                                         {{-- <embed src="{{asset('pdfs/Methode 5S.pdf')}}" type="application/pdf" width="100%" height="600px" /> --}}
                                         <!-- Ajouter un lien de téléchargement -->
-                                        <a href="{{asset('pdfs/MONOGRAPHIE1.pdf')}}" download="{{$Fichier->auteur." ".$Fichier->titre." ".$timestamp}}.pdf" class="btn btn-primary mt-2">Télécharger le PDF</a>
-                                        <a href="/Gerer/{{$Fichier->id}}" class="btn btn-danger mt-2">Gérer</a>
+                                        <a href="{{ url('/telecharger/' . $Fichier->id) }}" download="{{$Fichier->auteur." ".$Fichier->annee->designation." Soutenance ".$Fichier->titre." ".$timestamp}}.pdf" class="btn btn-primary mt-2">Télécharger le PDF</a>
+                                        <a href="/fichier/{{$Fichier->id}}" class="btn btn-danger mt-2">Gérer</a>
                                     </div>
                                 </div>
                             </div>

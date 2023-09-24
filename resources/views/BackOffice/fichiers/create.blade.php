@@ -45,13 +45,13 @@ https://templatemo.com/tm-547-real-dynamic
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item ">
-                                        <a class="nav-link tm-nav-link" href="#">Accueil</a>
+                                        <a class="nav-link tm-nav-link" href="/dashboards">Accueil</a>
                                     </li>
                                     <li class="nav-item active">
                                         <a class="nav-link tm-nav-link" href="/create">Création<span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="contact.html">Contactez-Nous</a>
+                                        <a class="nav-link tm-nav-link" href="/contact">Contactez-Nous</a>
                                     </li>
                                     @auth <!-- Vérifiez si l'utilisateur est connecté -->
                                     <li class="nav-item">

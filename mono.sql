@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 08 août 2023 à 12:25
+-- Généré le : dim. 24 sep. 2023 à 23:12
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -89,24 +89,29 @@ CREATE TABLE `fichiers` (
   `filiere` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `annee_id` int(11) NOT NULL,
-  `token` varchar(255) DEFAULT NULL
+  `token` varchar(255) DEFAULT NULL,
+  `etat` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `fichiers`
 --
 
-INSERT INTO `fichiers` (`id`, `theme`, `auteur`, `dm`, `created_at`, `updated_at`, `pdf_file`, `filiere`, `user_id`, `annee_id`, `token`) VALUES
-(1, 'Le monde est beau', 'Mabiala Alain', 'Mr MAKITA JEAN', '2023-07-29 01:26:37', '2023-07-29 01:26:37', 'public\\pdfs', 'Informatique de gestion', 1, 17, NULL),
-(2, 'La prise en charge des NAT', 'Louemba Franque', 'Mr ANTOINE MAKAYA', '2023-07-29 01:26:37', '2023-07-29 01:26:37', 'public\\pdfs', 'Reseau Informatique', 1, 17, NULL),
-(3, 'Lala', 'jfbkleaf', 'jsbfl', '2023-08-07 22:30:47', '2023-08-07 22:30:47', NULL, 'MAINTENANCE INDUSTRIELLE', 1, 17, NULL),
-(4, 'Gestion Pharmacie', 'MANTELE CLARKY/ NGO-PAMBOU', 'ESSOMBA CLEMENT', '2023-08-07 22:32:12', '2023-08-07 22:32:12', NULL, 'MAINTENANCE INDUSTRIELLE', 1, 17, NULL),
-(5, 'B', 'B', 'B', '2023-08-08 08:02:30', '2023-08-08 08:02:30', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL),
-(6, 'LALA', 'LOLO', 'NANA', '2023-08-08 08:06:00', '2023-08-08 08:06:00', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL),
-(7, 'NONN', 'NONO', 'NONO', '2023-08-08 08:53:59', '2023-08-08 08:53:59', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL),
-(8, 'LALA', 'NONO', 'NINI', '2023-08-08 09:08:53', '2023-08-08 09:08:53', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL),
-(9, 'aer', 'aze', 'aze', '2023-08-08 09:14:00', '2023-08-08 09:14:00', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL),
-(10, 'GESTION HOPITAL', 'KEREN IDONI', 'JOSIANE', '2023-08-08 09:19:57', '2023-08-08 09:19:57', 'pdfs/1691486397.pdf', 'INFORMATIQUE DE GESTION', 1, 17, NULL);
+INSERT INTO `fichiers` (`id`, `theme`, `auteur`, `dm`, `created_at`, `updated_at`, `pdf_file`, `filiere`, `user_id`, `annee_id`, `token`, `etat`) VALUES
+(1, 'Le monde est beau', 'Mabiala Alain', 'Mr MAKITA JEAN', '2023-07-29 01:26:37', '2023-09-24 09:29:00', 'public\\pdfs', 'Informatique de gestion', 1, 17, NULL, 1),
+(2, 'La prise en charge des NAT', 'Louemba Franque', 'Mr ANTOINE MAKAYA', '2023-07-29 01:26:37', '2023-07-29 01:26:37', 'public\\pdfs', 'Reseau Informatique', 1, 17, NULL, 1),
+(3, 'Lala', 'jfbkleaf', 'jsbfl', '2023-08-07 22:30:47', '2023-09-24 09:26:46', NULL, 'MAINTENANCE INDUSTRIELLE', 1, 17, NULL, 1),
+(4, 'Gestion Pharmacie', 'MANTELE CLARKY/ NGO-PAMBOU', 'ESSOMBA CLEMENT', '2023-08-07 22:32:12', '2023-08-07 22:32:12', NULL, 'MAINTENANCE INDUSTRIELLE', 1, 17, NULL, 1),
+(5, 'B', 'B', 'B', '2023-08-08 08:02:30', '2023-08-11 11:17:50', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(6, 'LALA', 'LOLO', 'NANA', '2023-08-08 08:06:00', '2023-08-08 08:06:00', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(7, 'NONN', 'NONO', 'NONO', '2023-08-08 08:53:59', '2023-08-08 08:53:59', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(8, 'LALA', 'NONO', 'NINI', '2023-08-08 09:08:53', '2023-09-24 10:24:02', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL, 0),
+(9, 'aer', 'aze', 'aze', '2023-08-08 09:14:00', '2023-08-08 09:14:00', NULL, 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(10, 'GESTION HOPITAL', 'KEREN IDONI', 'JOSIANE', '2023-08-08 09:19:57', '2023-08-08 09:19:57', 'pdfs/1691486397.pdf', 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(11, 'eer', 'etzr', 'ette', '2023-08-11 10:10:30', '2023-08-11 10:10:30', 'pdfs/1691748630.pdf', 'fef', 1, 17, NULL, 1),
+(12, 'Mnager sans boire', 'lalala', 'alalala', '2023-08-11 10:11:40', '2023-08-11 10:11:40', 'pdfs/1691748700.pdf', 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(13, 'Les bits', 'YOANH', 'MANTELE', '2023-08-11 10:17:10', '2023-08-11 10:17:10', 'pdfs/1691749030.pdf', 'INFORMATIQUE DE GESTION', 1, 17, NULL, 1),
+(14, 'La tech de nos jours', 'Mabiala Jean Paul', 'Makosso Paul', '2023-09-24 10:25:56', '2023-09-24 10:25:56', 'pdfs/1695551156.pdf', 'RESOUSRCE HUMAINES', 1, 17, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +194,7 @@ CREATE TABLE `tels` (
 --
 
 INSERT INTO `tels` (`id`, `nbr`, `created_at`, `updated_at`) VALUES
-(1, 12, '2023-08-07 21:24:05', '2023-08-07 19:24:05');
+(1, 25, '2023-09-24 10:27:33', '2023-09-24 08:27:33');
 
 -- --------------------------------------------------------
 
@@ -297,7 +302,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT pour la table `fichiers`
 --
 ALTER TABLE `fichiers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`

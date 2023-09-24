@@ -87,9 +87,7 @@ https://templatemo.com/tm-547-real-dynamic
 
                             {{-- <embed src="{{asset('pdfs/Methode 5S.pdf')}}" type="application/pdf" width="100%" height="600px" /> --}}
                             <!-- Ajouter un lien de téléchargement -->
-                            <a href="/telecharger" class="btn btn-primary mt-2">Télécharger</a>
-                            <a href="{{ asset($Fichier->pdf_file) }}" download="{{ $Fichier->auteur . ' ' . $Fichier->theme . ' ' . time() }}.pdf" class="btn btn-primary mt-2">Télécharger le PDF</a>
-
+                            <a href="{{ url('/telecharger/' . $Fichier->id) }}" download="{{$Fichier->auteur." ".$Fichier->annee->designation." Soutenance ".$Fichier->titre." ".$timestamp}}.pdf" class="btn btn-primary mt-2">Télécharger le PDF</a>
                         </div>
                     </div>
                 </div>
