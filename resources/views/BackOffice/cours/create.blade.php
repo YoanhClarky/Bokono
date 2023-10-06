@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/png" href="{{ asset('book-solid.svg') }}">
     <title>Bokono etude</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
     <link href="{{asset('template/css/bootstrap.min.css')}}" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
@@ -15,13 +14,20 @@
     <link href="{{asset('template/slick/slick-theme.css')}}" rel='stylesheet' />
     <link href="{{asset('template/css/templatemo-real-dynamic.css')}}" rel="stylesheet" />
     <!--
-        
-
-TemplateMo 547 Real Dynamic
 
 https://templatemo.com/tm-547-real-dynamic
 
 -->
+<style>
+    .table-link {
+        color: #545454; /* Couleur de décoloration */
+        text-decoration: none; /* Supprime la soulignement du lien */
+    }
+
+    .table-link:hover {
+        color: #282828; /* Couleur au survol du lien */
+    }
+</style>
 </head>
 
 <body>
@@ -45,18 +51,16 @@ https://templatemo.com/tm-547-real-dynamic
                             <div class="collapse navbar-collapse tm-nav" id="navbarNav">
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link tm-nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
-                                    </li>
+                                    @auth <!-- Vérifiez si l'utilisateur est connecté -->
                                     <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="/livres">Livres</a>
+                                        <a class="nav-link tm-nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Déconnexion
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="/resumes">Résumés</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="/cours">Cours</a>
-                                    </li>
+                                    @endauth
                                 </ul>
                                 <!-- Links -->
                             </div>
@@ -68,21 +72,61 @@ https://templatemo.com/tm-547-real-dynamic
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
-    <div class="tm-container bg-white" style="text-align: center;">
-        {{-- <div class="tm-header-stripe w-100"></div> --}}
-        <div class="container-fluid">
+    <div class="tm-container bg-white">
+        <div class="tm-header-stripe w-100"></div>
+        <div class="container-fluid mt-4 mb-4">
             <div class="row tm-mb-7 justify-content-center">
-                <div class="col-lg-3 col-sm-6 mb-lg-0 mb-5">
-                    <h3 class="tm-text-primary tm-mb-4">Sélectionnez l'année</h3>
-                    <nav class="tm-nav-secondary">
-                        <ul>
-                            @foreach ($cycles as $cycle )
-                            <li><a href="/liste/{{$cycle->id}}">{{$cycle->designation}}</a></li>
-                            @endforeach
-                        </ul>
-                    </nav>
+                <div class="col-lg-12">
+                    <div class="container mt-3">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <form action="{{ route('cour.store') }}" method="POST">
+                                    @csrf
+                                    <!-- Champs du cours -->
+                                    <div class="form-group">
+                                        <label for="designation">Désignation du cours</label>
+                                        <input type="text" class="form-control" name="designation" required>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <label for="description">Description du cours</label>
+                                        <textarea class="form-control" name="description" required></textarea>
+                                    </div>
+                                
+                                    <!-- Champs du courcycle -->
+                                    <div class="form-group">
+                                        <label for="type_id">Type</label>
+                                        <select class="form-control" name="type_id" required>
+                                            <option value="">Choix du type</option>
+                                            @foreach ($types as $item)
+                                            <option value="{{ $item->id }}">{{ $item->designation }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <label for="cycle_id">Cycle</label>
+                                        <select class="form-control" name="cycle_id" required>
+                                            <option value="">Choix du cycle</option>
+                                            @foreach ($cycles as $item)
+                                            <option value="{{ $item->id }}">{{ $item->designation }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                
+                                    <!-- Champ caché pour le cour_id -->
+                                    <input type="hidden" name="cour_id" id="cour_id" value="">
+                                
+                                    <button type="submit" class="btn btn-primary">Créer</button>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+            
             <footer class="row">
                 <div>
                     <a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube tm-social-icon"></i></a>

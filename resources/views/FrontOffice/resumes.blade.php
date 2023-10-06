@@ -15,13 +15,20 @@
     <link href="{{asset('template/slick/slick-theme.css')}}" rel='stylesheet' />
     <link href="{{asset('template/css/templatemo-real-dynamic.css')}}" rel="stylesheet" />
     <!--
-        
-
-TemplateMo 547 Real Dynamic
 
 https://templatemo.com/tm-547-real-dynamic
 
 -->
+<style>
+    .table-link {
+        color: #545454; /* Couleur de décoloration */
+        text-decoration: none; /* Supprime la soulignement du lien */
+    }
+
+    .table-link:hover {
+        color: #282828; /* Couleur au survol du lien */
+    }
+</style>
 </head>
 
 <body>
@@ -45,13 +52,13 @@ https://templatemo.com/tm-547-real-dynamic
                             <div class="collapse navbar-collapse tm-nav" id="navbarNav">
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link tm-nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+                                    <li class="nav-item">
+                                        <a class="nav-link tm-nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="/livres">Livres</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item active">
                                         <a class="nav-link tm-nav-link" href="/resumes">Résumés</a>
                                     </li>
                                     <li class="nav-item">
@@ -68,21 +75,35 @@ https://templatemo.com/tm-547-real-dynamic
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
-    <div class="tm-container bg-white" style="text-align: center;">
+    <div class="tm-container bg-white">
         {{-- <div class="tm-header-stripe w-100"></div> --}}
-        <div class="container-fluid">
+        <div class="container-fluid mb-4">
             <div class="row tm-mb-7 justify-content-center">
-                <div class="col-lg-3 col-sm-6 mb-lg-0 mb-5">
-                    <h3 class="tm-text-primary tm-mb-4">Sélectionnez l'année</h3>
-                    <nav class="tm-nav-secondary">
-                        <ul>
-                            @foreach ($cycles as $cycle )
-                            <li><a href="/liste/{{$cycle->id}}">{{$cycle->designation}}</a></li>
+                <div class="col-lg-12">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>COLLECTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($resumes as $resumes)
+                            <tr>
+                                <td>
+                                    <a href="/resumes/show/{{ $resumes->token }}" class="table-link">
+                                        <i class="fas fa-book"></i> {{ "- ".$resumes->cour->designation}}
+                                    </a>
+                                </td>
+                            </tr>
                             @endforeach
-                        </ul>
-                    </nav>
+                            
+                        </tbody>
+                    </table>
+                    
                 </div>
             </div>
+        </div>
+            
             <footer class="row">
                 <div>
                     <a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube tm-social-icon"></i></a>

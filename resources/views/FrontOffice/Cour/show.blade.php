@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/png" href="{{ asset('book-solid.svg') }}">
     <title>Bokono etude</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
     <link href="{{asset('template/css/bootstrap.min.css')}}" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
@@ -15,13 +14,20 @@
     <link href="{{asset('template/slick/slick-theme.css')}}" rel='stylesheet' />
     <link href="{{asset('template/css/templatemo-real-dynamic.css')}}" rel="stylesheet" />
     <!--
-        
-
-TemplateMo 547 Real Dynamic
 
 https://templatemo.com/tm-547-real-dynamic
 
 -->
+<style>
+    .table-link {
+        color: #545454; /* Couleur de décoloration */
+        text-decoration: none; /* Supprime la soulignement du lien */
+    }
+
+    .table-link:hover {
+        color: #282828; /* Couleur au survol du lien */
+    }
+</style>
 </head>
 
 <body>
@@ -45,16 +51,16 @@ https://templatemo.com/tm-547-real-dynamic
                             <div class="collapse navbar-collapse tm-nav" id="navbarNav">
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
-                                        <a class="nav-link tm-nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
-                                    </li>
                                     <li class="nav-item">
+                                        <a class="nav-link tm-nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
+                                    </li>
+                                    <li class="nav-item ">
                                         <a class="nav-link tm-nav-link" href="/livres">Livres</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="/resumes">Résumés</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item active">
                                         <a class="nav-link tm-nav-link" href="/cours">Cours</a>
                                     </li>
                                 </ul>
@@ -68,21 +74,36 @@ https://templatemo.com/tm-547-real-dynamic
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
-    <div class="tm-container bg-white" style="text-align: center;">
+    <div class="tm-container bg-white">
         {{-- <div class="tm-header-stripe w-100"></div> --}}
-        <div class="container-fluid">
+        <div class="container-fluid mt-4 mb-4">
             <div class="row tm-mb-7 justify-content-center">
-                <div class="col-lg-3 col-sm-6 mb-lg-0 mb-5">
-                    <h3 class="tm-text-primary tm-mb-4">Sélectionnez l'année</h3>
-                    <nav class="tm-nav-secondary">
-                        <ul>
-                            @foreach ($cycles as $cycle )
-                            <li><a href="/liste/{{$cycle->id}}">{{$cycle->designation}}</a></li>
-                            @endforeach
-                        </ul>
-                    </nav>
+                <div class="col-lg-8">
+                    <!-- Début de la carte (card) -->
+                    <div class="card">
+                        <!-- Image du livre -->
+                        <img src="chemin_de_l_image_du_cour.jpg" class="card-img-top" alt="Image du cour">
+        
+                        <!-- Contenu de la carte -->
+                        <div class="card-body">
+                            <!-- Titre du livre -->
+                            <h5 class="card-title">{{ $inf->cour->designation }}</h5>
+        
+                            <!-- Description du livre -->
+                            <p class="card-text">{{ $inf->cour->description }}Une brève description du livre va ici. Vous pouvez ajouter des détails importants sur le livre.</p>
+                            @php
+                            $timestamp = time();
+                            @endphp
+                            <!-- Bouton de téléchargement -->
+                            <a href="{{ url('cour/telecharger/' . $inf->id) }}" download="{{$inf->cour->designation." ".$timestamp}}.pdf" class="btn btn-primary mt-2">Télécharger le PDF</a>
+                        </div>
+                    </div>
+                    <!-- Fin de la carte (card) -->
                 </div>
             </div>
+        </div>
+        
+            
             <footer class="row">
                 <div>
                     <a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube tm-social-icon"></i></a>

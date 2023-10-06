@@ -48,7 +48,7 @@ ul { line-height: 2; }
     margin: 0 auto;
 }
 
-.container-fluid { max-width: 1570px; }
+.container-fluid { max-width: 1570px;}
 
 .tm-site-header {
     background-color: #474849;
@@ -58,20 +58,26 @@ ul { line-height: 2; }
 
 .tm-site-header-overlay {
     color: white;
-    background-color: #656667;    
-    padding-top: 20px; 
+    background-color: #d3d4d577;  
+    background-image: url(../img/fond.jpg);
+    background-size: cover;
+    padding-top: 10px; 
+    max-width:100%;
+    height:auto;
+    /* ici2 */
 }
 
 .tm-header-stripe {
-    height: 20px;
-    width: 68.75%;
-    background-color: #474849;      
-    background-image: url(../img/stripe-short.png);
+  /* height: 20px;
+  width: 68.75%;
+  background-color: #474849;
+  background-image: url(../img/stripe-short.png); */
 }
 
+
 .tm-header-stripe-short {
-    width: 62%;
-    margin-top: 20px;  
+    /* width: 62%;
+    margin-top: 20px;   */
 }
 
 .tm-site-header-left { padding-bottom: 55px; }
@@ -99,7 +105,9 @@ ul { line-height: 2; }
 
 .nav-item.active,
 .nav-item:hover {
-  background-color: #474849;
+  /* background-color: #44c702; */
+  background-color: rgba(68, 199, 2, 0.146);
+  /* ici */
 }
 
 .nav-item.active .nav-link,
@@ -163,7 +171,7 @@ footer { padding-bottom: 55px; }
 
 .btn {
   font-size: 1.2rem;
-  padding: 10px 35px;
+  padding: 4px 20x;
   border: none;
 }
 
