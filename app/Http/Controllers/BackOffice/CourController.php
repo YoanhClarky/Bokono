@@ -33,14 +33,6 @@ class CourController extends Controller
 
     public function store(Request $request)
 {
-    // Validez les données du formulaire
-    $request->validate([
-        'designation' => 'required|string|max:255',
-        'description' => 'required|string',
-        'type_id' => 'required|exists:types,id',
-        'cycle_id' => 'required|exists:cycles,id',
-    ]);
-
     // Créez d'abord le cours
     $cours = new Cour();
     $cours->designation = $request->input('designation');
