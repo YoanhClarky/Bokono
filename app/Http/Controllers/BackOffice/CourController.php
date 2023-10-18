@@ -25,10 +25,11 @@ class CourController extends Controller
     
     public function show($token){
         $item=Courcycle::where('token',$token)->firstOrfail();
+        $items=Courcycle::orderBy('type_id','DESC')->get();
         $cycles=Cycle::all();
         $types=Type::all();
         $cours=Cour::all();
-        return view('BackOffice.cours.show')->with(compact('item','cycles','types','cours'));
+        return view('BackOffice.cours.show')->with(compact('item','cycles','types','cours','items'));
     }
 
     public function store(Request $request)
@@ -39,37 +40,90 @@ class CourController extends Controller
     $cours->description = $request->input('description');
     $cours->token = sha1($request->input('designation').time());
     $cours->save();
+    
+    $data = $request->except('pdf_btn');
+    $file = $request->file('pdf_btn');
 
-    // Ensuite, créez le courcycle en utilisant le cours fraîchement créé
-    $courcycle = new Courcycle();
-    $courcycle->type_id = $request->input('type_id');
-    $courcycle->cycle_id = $request->input('cycle_id');
-    $courcycle->cour_id = $cours->id; // Utilisez l'ID du cours créé
-    $courcycle->token = sha1($request->input('cycle_id').time());
-    $courcycle->save();
+    if ($file) {
+        // Ajoutez une règle de validation pour la taille maximale du fichier
+        $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
+        $this->validate($request, [
+            'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
+        ]);
+
+        $ext = $file->getClientOriginalExtension();
+        $arr_ext = ['pdf'];
+
+        if (!file_exists(public_path('courpdf'))) {
+            mkdir(public_path('courpdf'), 0777, true);
+        }
+
+        if (in_array($ext, $arr_ext)) {
+            $name_with_extension = time() . '.' . $ext;
+            $file->move(public_path('courpdf'), $name_with_extension);
+
+            if (isset($data['url_file'])) {
+                if (file_exists(public_path($data['url_file']))) {
+                    unlink(public_path($data['url_file']));
+                }
+            }
+
+            $data['url_file'] = 'courpdf/' . $name_with_extension;
+        }
+    }
+
+    $cour = new Courcycle([
+            'type_id'=> $request->type_id,
+            'cour_id'=> $cours->id,
+            'cycle_id'=> $request->cycle_id,
+            'token' => sha1($request->designation.time()),
+            'url_pdf' => $data['url_file'],
+    ]);
+    $cour->save();
     return redirect('dashboard/cours');
 }
 
 public function update(Request $request, $id)
 {
-    // Validez les données du formulaire
-    $request->validate([
-        'type_id' => 'required|exists:types,id',
-        'cycle_id' => 'required|exists:cycles,id',
-    ]);
+    $data = $request->except('pdf_btn');
+    $file = $request->file('pdf_btn');
 
-    // Récupérez le modèle CourCycle à mettre à jour par son ID
-    $courCycle = CourCycle::find($id);
+    if ($file) {
+        // Ajoutez une règle de validation pour la taille maximale du fichier
+        $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
+        $this->validate($request, [
+            'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
+        ]);
 
-    if (!$courCycle) {
-        return redirect('dashboard/cours');
+        $ext = $file->getClientOriginalExtension();
+        $arr_ext = ['pdf'];
+
+        if (!file_exists(public_path('courpdf'))) {
+            mkdir(public_path('courpdf'), 0777, true);
+        }
+
+        if (in_array($ext, $arr_ext)) {
+            $name_with_extension = time() . '.' . $ext;
+            $file->move(public_path('courpdf'), $name_with_extension);
+
+            // Supprimer l'ancien fichier PDF s'il existe
+            $cour = Courcycle::find($id);
+            if ($cour) {
+                if (file_exists(public_path($cour->url_pdf))) {
+                    unlink(public_path($cour->url_pdf));
+                }
+
+                $data['url_pdf'] = 'courpdf/' . $name_with_extension;
+            } else {
+                // Gérer le cas où le livre n'est pas trouvé
+                // Vous pouvez rediriger ou afficher un message d'erreur ici
+            }
+        }
     }
-
-    // Mettez à jour les champs du modèle CourCycle
-    $courCycle->type_id = $request->input('type_id');
-    $courCycle->cycle_id = $request->input('cycle_id');
-    $courCycle->save();
-
+    $cour->type_id = $request->type_id;
+    $cour->cour_id = $request->cour_id;
+    $cour->cycle_id = $request->cycle_id;
+    $cour->save();
     return redirect('dashboard/cours');
 }
 

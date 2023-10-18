@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ResumeController extends Controller
 {
     public function index(){
-        $resumes = resume::paginate(5); // Utilisez la méthode paginate() sur le modèle Livre
+        $resumes = resume::where('etat',1)->where('yeux',1)->paginate(5); // Utilisez la méthode paginate() sur le modèle Livre
         return view('FrontOffice.resumes')->with(compact('resumes'));
     }
 

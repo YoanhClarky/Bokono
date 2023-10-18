@@ -86,9 +86,9 @@ https://templatemo.com/tm-547-real-dynamic
                                 <div class="form-group">
                                     <label for="cour_id">Designation</label>
                                     <select class="form-control" name="cour_id" required>
-                                        <option value="{{ $item->cour->id }}">{{ $item->cour->designation }}</option>
-                                        @foreach ($cours as $c)
-                                        <option value="{{ $c->id }}">{{ $c->designation }}</option>
+                                        <option value="{{ $item->cour->id }}">{{ $item->cour->designation." ".$item->type->designation." ".$item->cycle->designation }}</option>
+                                        @foreach ($items as $c)
+                                        <option value="{{ $c->cour->id }}">{{ $c->cour->designation." ".$c->type->designation." ".$c->cycle->designation }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -117,6 +117,14 @@ https://templatemo.com/tm-547-real-dynamic
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pdf_btn">Fichier PDF actuel</label>
+                                    <p>{{ $item->url_pdf }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nouveau_pdf_btn">Remplacer le PDF</label>
+                                    <input type="file" class="form-control-file" name="nouveau_pdf_btn" accept=".pdf" id="nouveau_pdf_btn">
                                 </div>
                             
                                 <button type="submit" class="btn btn-primary">Mettre à jour</button>

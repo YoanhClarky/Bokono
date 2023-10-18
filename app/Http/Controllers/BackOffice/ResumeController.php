@@ -75,7 +75,6 @@ class ResumeController extends Controller
 
     // Récupérez l'objet Resume à mettre à jour par son ID
     $resume = Resume::find($id);
-
     if (!$resume) {
         return redirect('dashboard/resumes')->with('error', 'Resume non trouvé.');
     }

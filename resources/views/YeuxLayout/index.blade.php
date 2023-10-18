@@ -27,6 +27,24 @@ https://templatemo.com/tm-547-real-dynamic
     .table-link:hover {
         color: #282828; /* Couleur au survol du lien */
     }
+    body {
+    font-size: 14px; /* Réduisez la taille de la police globale */
+}
+/* Réduisez la taille des paragraphes */
+p {
+    font-size: 12px; /* Taille de police plus petite pour les paragraphes */
+}
+/* Styles de lien inspirés de Torrent9 */
+a {
+    color: #00a5a8; /* Couleur du lien */
+    text-decoration: none; /* Supprime la soulignement du lien */
+    transition: color 0.3s; /* Animation de changement de couleur au survol */
+}
+
+a:hover {
+    color: #ff5a0a; /* Couleur au survol du lien */
+}
+
 </style>
 </head>
 
@@ -35,9 +53,9 @@ https://templatemo.com/tm-547-real-dynamic
         <div class="tm-site-header-overlay">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4 tm-site-header-left">
-                        <h1 class="text-uppercase tm-site-name">BOKONO ETUDE</h1>
-                        <p class="text-white mb-0 tm-site-desc">ETUDIER PLUS FACILEMENT</p>
+                    <div class="tm-site-header-left">
+                        <h1 class="text-uppercase tm-site-name"></h1>
+                        <p class="text-white mb-0 tm-site-desc"></p>
                     </div>
                     <div class="col-lg-8 tm-site-header-right">
                         <!--Navbar-->
@@ -51,6 +69,18 @@ https://templatemo.com/tm-547-real-dynamic
                             <div class="collapse navbar-collapse tm-nav" id="navbarNav">
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link tm-nav-link" href="/yeux">Accueil <span class="sr-only">(current)</span></a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a class="nav-link tm-nav-link" href="/yeux/livres">Livres</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link tm-nav-link" href="/yeux/resumes">Résumés</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link tm-nav-link" href="/yeux/cours">Cours</a>
+                                    </li>
                                     @auth <!-- Vérifiez si l'utilisateur est connecté -->
                                     <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -68,64 +98,25 @@ https://templatemo.com/tm-547-real-dynamic
                         </nav>
                         <!--/.Navbar-->
                     </div> <!-- col -->
+                
                 </div> <!-- row -->
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
     <div class="tm-container bg-white">
         <div class="tm-header-stripe w-100"></div>
-        <div class="container-fluid mt-4 mb-4">
-            <div class="row tm-mb-7 justify-content-center">
-                <div class="col-lg-12">
-                    <div class="container mt-3">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10">
-                                <form action="{{ route('cour.store') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <!-- Champs du cours -->
-                                    <div class="form-group">
-                                        <label for="designation">Désignation du cours</label>
-                                        <input type="text" class="form-control" name="designation" required>
-                                    </div>
-                                
-                                    <div class="form-group">
-                                        <label for="description">Description du cours</label>
-                                        <textarea class="form-control" name="description" required></textarea>
-                                    </div>
-                                
-                                    <!-- Champs du courcycle -->
-                                    <div class="form-group">
-                                        <label for="type_id">Type</label>
-                                        <select class="form-control" name="type_id" required>
-                                            <option value="">Choix du type</option>
-                                            @foreach ($types as $item)
-                                            <option value="{{ $item->id }}">{{ $item->designation }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                
-                                    <div class="form-group">
-                                        <label for="cycle_id">Cycle</label>
-                                        <select class="form-control" name="cycle_id" required>
-                                            <option value="">Choix du cycle</option>
-                                            @foreach ($cycles as $item)
-                                            <option value="{{ $item->id }}">{{ $item->designation }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pdf_btn">Fichier PDF</label>
-                                        <input type="file" class="form-control-file" name="pdf_btn" accept=".pdf" required id="pdf_btn">
-                                    </div>
-                                    <!-- Champ caché pour le cour_id -->
-                                    <input type="hidden" name="cour_id" id="cour_id" value="">
-                                
-                                    <button type="submit" class="btn btn-primary">Créer</button>
-                                </form>
-                                
-                            </div>
-                        </div>
+            <div class="container-fluid mt-4 mb-4">
+                <div class="row tm-mb-7 justify-content-center">
+                    @yield('content')     
+                    @foreach($tels as $tel)
+                    <div style="size: 30px" class=" mb-4 mt-4">
+                        @if ($tel !== 0)
+                        <h1>{{ $tel->nbr." Téléchargements" }}</h1> 
+                        @else
+                        <h1>{{ $tel->nbr." Téléchargement" }}</h1> 
+                        @endif
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CourCycleController extends Controller
 {
     public function index(){
-        $items = Courcycle::orderBy('cycle_id','ASC')->get(); // Utilisez la méthode paginate() sur le modèle Livre
+        $items = Courcycle::where('etat',1)->where('yeux',1)->orderBy('cycle_id','ASC')->get(); // Utilisez la méthode paginate() sur le modèle Livre
         $courfilieres = Courfiliere::All();
         return view('FrontOffice.cours')->with(compact('items','courfilieres'));
     }

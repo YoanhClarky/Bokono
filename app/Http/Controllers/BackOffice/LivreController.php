@@ -71,56 +71,56 @@ class LivreController extends Controller
     }
     
     public function update(Request $request, $id){
-        $data = $request->except('pdf_btn');
-        $file = $request->file('pdf_btn');
-    
-        if ($file) {
-            // Ajoutez une règle de validation pour la taille maximale du fichier
-            $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
-            $this->validate($request, [
-                'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
-            ]);
-    
-            $ext = $file->getClientOriginalExtension();
-            $arr_ext = ['pdf'];
-    
-            if (!file_exists(public_path('livrephoto'))) {
-                mkdir(public_path('livrephoto'), 0777, true);
-            }
-    
-            if (in_array($ext, $arr_ext)) {
-                $name_with_extension = time() . '.' . $ext;
-                $file->move(public_path('livrephoto'), $name_with_extension);
-    
-                // Supprimer l'ancien fichier PDF s'il existe
-                $livre = Livre::find($id);
-    
-                if ($livre) {
-                    if (file_exists(public_path($livre->url_pdf))) {
-                        unlink(public_path($livre->url_pdf));
-                    }
-    
-                    $data['url_pdf'] = 'livrephoto/' . $name_with_extension;
-                } else {
-                    // Gérer le cas où le livre n'est pas trouvé
-                    // Vous pouvez rediriger ou afficher un message d'erreur ici
+        // Validez les données du formulaire
+    // $request->validate([
+    //     'designation' => 'required|string|max:255',
+    //     'cour_id' => 'required|exists:cours,id',
+    //     'pdf_btn' => 'nullable|file|max:51200|mimes:pdf', // Limite de 50 Mo pour les fichiers PDF
+    // ]);
+
+    // Récupérez l'objet Resume à mettre à jour par son ID
+    $livre = Livre::find($id);
+    if (!$livre) {
+        return redirect('dashboard/livres')->with('error', 'Resume non trouvé.');
+    }
+
+    // Gérez la mise à jour du fichier PDF
+    $file = $request->file('pdf_btn');
+
+    if ($file) {
+        $ext = $file->getClientOriginalExtension();
+        $allowedExtensions = ['pdf'];
+
+        if (in_array($ext, $allowedExtensions)) {
+            $maxFileSize = 51200; // 50 Mo en kilo-octets
+            if ($file->getSize() <= $maxFileSize) {
+                // Supprimez l'ancien fichier PDF s'il existe
+                if (file_exists(public_path($livre->url_pdf))) {
+                    unlink(public_path($livre->url_pdf));
                 }
+
+                // Déplacez le nouveau fichier PDF vers le répertoire de stockage
+                $name_with_extension = time() . '.' . $ext;
+                $file->move(public_path('livrepdf'), $name_with_extension);
+                $livre->url_pdf = 'livrepdf/' . $name_with_extension;
+            } else {
+                return redirect()->back()->with('error', 'La taille du fichier PDF dépasse la limite de 50 Mo.');
             }
+        } else {
+            return redirect()->back()->with('error', 'Le fichier doit être au format PDF.');
         }
-    
-        // Mettez à jour les autres champs du livre
-        $livre->update([
-            'auteur'=> $request->auteur,
-            'titre'=> $request->titre,
-            'soustitre'=> $request->soustitre,
-            'edition'=> $request->edition,
-            'lieupub'=> $request->lieupub,
-            'maisoned'=> $request->maisoned,
-            'datepub'=> $request->datepub,
-            'page'=> $request->page,
-            'url_pdf' => $data['url_pdf'],
-        ]);
-    
+    }
+
+    // Mettez à jour les autres champs du modèle Resume
+    $livre->auteur = $request->auteur;
+    $livre->titre = $request->titre;
+    $livre->soustitre = $request->soustitre;
+    $livre->edition = $request->edition;
+    $livre->lieupub = $request->lieupub;
+    $livre->maisoned = $request->maisoned;
+    $livre->datepub = $request->datepub;
+    $livre->page = $request->page;
+    $livre->save();
         return redirect('dashboard/livres');
     }
     

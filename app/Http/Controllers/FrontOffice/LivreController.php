@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class LivreController extends Controller
 {
     public function index(){
-        $livres = Livre::OrderBy('titre','Asc')->Where('yeux',1)->simplePaginate(5); // Utilisez la méthode paginate() sur le modèle Livre
+        $livres = Livre::OrderBy('titre','Asc')->where('etat',1)->where('yeux',1)->simplePaginate(5); // Utilisez la méthode paginate() sur le modèle Livre
         return view('FrontOffice.livres')->with(compact('livres'));
     }
 
