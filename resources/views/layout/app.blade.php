@@ -14,14 +14,6 @@
     <link href="{{asset('template/slick/slick.css')}}" rel='stylesheet' /> <!-- https://kenwheeler.github.io/slick/ -->
     <link href="{{asset('template/slick/slick-theme.css')}}" rel='stylesheet' />
     <link href="{{asset('template/css/templatemo-real-dynamic.css')}}" rel="stylesheet" />
-    <!--
-        
-
-TemplateMo 547 Real Dynamic
-
-https://templatemo.com/tm-547-real-dynamic
-
--->
 <style>
     body {
     font-family: Arial, sans-serif;
@@ -126,20 +118,6 @@ a {
                 @endforeach
                 <!-- Ajoutez autant d'articles que nécessaire -->
             </section>
-            
-            <footer class="row">
-                <div>
-                    <a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube tm-social-icon"></i></a>
-                    <a href="https://fb.com/templatemo" class="tm-social-link"><i class="fab fa-facebook tm-social-icon"></i></a>
-                    <a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter tm-social-icon"></i></a>
-                    <a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram tm-social-icon"></i></a>
-                </div>
-                <p class="mb-0 w-100 text-center col-12">
-                    Company &copy; 2020 Company Name
-
-                    - Real Dynamic by <a rel="nofollow" href="https://templatemo.com" class="tm-text-link">TemplateMo</a>
-                </p>
-            </footer>
         </div> <!-- container-fluid -->
     </div>
 
