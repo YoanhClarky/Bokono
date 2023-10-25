@@ -22,6 +22,47 @@ TemplateMo 547 Real Dynamic
 https://templatemo.com/tm-547-real-dynamic
 
 -->
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.news {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.news-item {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+p {
+    font-size: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+</style>
 </head>
 
 <body>
@@ -68,21 +109,24 @@ https://templatemo.com/tm-547-real-dynamic
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
-    <div class="tm-container bg-white" style="text-align: center;">
+    <div class="tm-container bg-white">
         {{-- <div class="tm-header-stripe w-100"></div> --}}
         <div class="container-fluid">
-            <div class="row tm-mb-7 justify-content-center">
-                <div class="col-lg-3 col-sm-6 mb-lg-0 mb-5">
-                    <h3 class="tm-text-primary tm-mb-4">Sélectionnez l'année</h3>
-                    <nav class="tm-nav-secondary">
-                        <ul>
-                            @foreach ($cycles as $cycle )
-                            <li><a href="/liste/{{$cycle->id}}">{{$cycle->designation}}</a></li>
-                            @endforeach
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            <header>
+                <h1>Actualités</h1>
+            </header>
+            <section class="news">
+                @foreach ($actualites as $item)
+                <article class="news-item">
+                    <h2>{{$item->titre }}</h2>
+                    <p>Date de publication : {{$item->ddate }}</p>
+                    <img src="{{$item->img}}" alt="Image de l'article">
+                    <p>{{$item->contenu }}</p>
+                </article>
+                @endforeach
+                <!-- Ajoutez autant d'articles que nécessaire -->
+            </section>
+            
             <footer class="row">
                 <div>
                     <a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube tm-social-icon"></i></a>

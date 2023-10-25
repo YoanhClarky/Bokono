@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Actualite;
 use App\Models\Cycle;
 use App\Models\Tel;
 use Illuminate\Support\Facades\Route;
@@ -34,8 +35,9 @@ Route::get('/cours/show/{token}','App\Http\Controllers\FrontOffice\CourCycleCont
 Route::get('cour/telecharger/{id}', 'App\Http\Controllers\FrontOffice\CourCycleController@telechargercour');
 
 Route::get('/', function () {
+    $actualites = Actualite::where('etat',1)->get();
     $cycles=Cycle::All();
-    return view('layout.app')->with(compact('cycles'));
+    return view('layout.app')->with(compact('cycles','actualites'));
 });
 Route::get('/dashboard','App\Http\Controllers\BackOffice\CourController@dashboard')->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
@@ -104,6 +106,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/create', 'App\Http\Controllers\FichierController@create');
 });
 
+//ACTUALITES
+    Route::get('dashboard/actualites/','App\Http\Controllers\BackOffice\ActualiteController@index');
+    Route::post('dashboard/ajouter-actualite','App\Http\Controllers\BackOffice\ActualiteController@create');
 Route::get('/yeux', function () {
     $tels = Tel::All();
     return view('YeuxLayout.index')->with(compact('tels'));
