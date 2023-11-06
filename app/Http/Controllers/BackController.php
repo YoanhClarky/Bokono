@@ -24,8 +24,8 @@ class BackController extends Controller
         $file = $request->file('pdf_btn');
 
         if ($file) {
-            // Ajoutez une règle de validation pour la taille maximale du fichier
-            $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
+            
+            $maxFileSize = 50 * 1024; 
             $this->validate($request, [
                 'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
             ]);
@@ -58,7 +58,7 @@ class BackController extends Controller
             'filiere' => $request->filiere,
             'user_id' => Auth::user()->id,
             'annee_id' => $request->annee_id,
-            'pdf_file' => $data['url_file'], // Affecter le chemin du fichier PDF au champ pdf_file
+            'pdf_file' => $data['url_file'],
         ]);
 
         $fichier->save();
@@ -88,9 +88,7 @@ class BackController extends Controller
     public function delete($id)
     {
         $fichier = Fichier::findOrFail($id);
-        // Supprimer les enregistrements associés dans la table 'userproduit'
         $fichier->users()->detach();
-        // Supprimer le produit
         $fichier->delete();
         return back();
     }

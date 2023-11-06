@@ -13,8 +13,7 @@ class CourCycleController extends Controller
 {
     public function recherche(Request $request) {
         $designation = $request->input('designation');
-    
-        // Utilisez $designation pour effectuer votre recherche
+
         $items = Courcycle::where('etat', 1)
             ->where('yeux', 1)
             ->whereHas('cour', function ($query) use ($designation) {
@@ -30,12 +29,12 @@ class CourCycleController extends Controller
     
     
     public function index(){
-        $items = Courcycle::where('etat',1)->where('yeux',1)->orderBy('cycle_id','ASC')->get(); // Utilisez la méthode paginate() sur le modèle Livre
+        $items = Courcycle::where('etat',1)->where('yeux',1)->orderBy('cycle_id','ASC')->get(); 
         $courfilieres = Courfiliere::All();
         return view('FrontOffice.cours')->with(compact('items','courfilieres'));
     }
     public function show($token){
-        $inf = Courcycle::where('token',$token)->firstOrfail(); // Utilisez la méthode paginate() sur le modèle Livre
+        $inf = Courcycle::where('token',$token)->firstOrfail(); 
         //dd($inf);
         return view('FrontOffice.Cour.show')->with(compact('inf'));
     }
@@ -46,11 +45,10 @@ class CourCycleController extends Controller
         if (!$courcycle) {
             abort(404);
         }
-        $telechargement = Tel::firstOrCreate([]); // Récupère le premier enregistrement ou en crée un nouveau s'il n'existe pas
+        $telechargement = Tel::firstOrCreate([]);
         $telechargement->increment('nbr');
         $timestamp = time();
-        // Vous pouvez également ajouter ici le code pour renvoyer le fichier PDF au téléchargement
-        $pdfPath = public_path($courcycle->url_pdf); //z-vous que le chemin du fichier PDF est correct
+        $pdfPath = public_path($courcycle->url_pdf);
         $nomFichierTelechargement = $courcycle->cour->designation . " " . $timestamp . ".pdf";
         return response()->download($pdfPath, $nomFichierTelechargement);
     }

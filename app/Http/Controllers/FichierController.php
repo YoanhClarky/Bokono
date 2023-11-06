@@ -16,11 +16,9 @@ class FichierController extends Controller
     {
         $annees=Annee::where('etat',1)->orderBy('designation','ASC')->get();
         $tels=Tel::All();
-        // Mettez ici le code pour récupérer les données nécessaires pour le formulaire (ex: liste des utilisateurs, liste des années, etc.)
+    
         return view('BackOffice.fichiers.create')->with(compact('tels','annees'));
     }
-
-    // Fonction pour enregistrer un nouveau fichier
 
     public function store(Request $request)
     {

@@ -13,7 +13,7 @@ class ResumeController extends Controller
     public function recherche(Request $request) {
         $designation = $request->input('designation');
         
-        // Utilisez $designation pour effectuer votre recherche
+        
         $resumes = Resume::where('etat', 1)
             ->where('yeux', 1)
             ->whereRaw("LOWER(designation) LIKE ?", ["%" . strtolower($designation) . "%"])
@@ -26,12 +26,12 @@ class ResumeController extends Controller
 
 
     public function index(){
-        $resumes = resume::where('etat',1)->where('yeux',1)->paginate(5); // Utilisez la méthode paginate() sur le modèle Livre
+        $resumes = resume::where('etat',1)->where('yeux',1)->paginate(5); 
         return view('FrontOffice.resumes')->with(compact('resumes'));
     }
 
     public function show($token){
-        $resume = Resume::where('token',$token)->firstOrfail(); // Utilisez la méthode paginate() sur le modèle Livre
+        $resume = Resume::where('token',$token)->firstOrfail();
         return view('FrontOffice.Resume.show')->with(compact('resume'));
     }
     public function telechargerresume($id)
@@ -41,11 +41,11 @@ class ResumeController extends Controller
         if (!$resume) {
             abort(404);
         }
-        $telechargement = Tel::firstOrCreate([]); // Récupère le premier enregistrement ou en crée un nouveau s'il n'existe pas
+        $telechargement = Tel::firstOrCreate([]); 
         $telechargement->increment('nbr');
         $timestamp = time();
-        // Vous pouvez également ajouter ici le code pour renvoyer le fichier PDF au téléchargement
-        $pdfPath = public_path($resume->url_pdf); //z-vous que le chemin du fichier PDF est correct
+
+        $pdfPath = public_path($resume->url_pdf);
         $nomFichierTelechargement = $resume->designation . " " . $timestamp . ".pdf";
         return response()->download($pdfPath, $nomFichierTelechargement);
     }

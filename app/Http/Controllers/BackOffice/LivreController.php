@@ -22,8 +22,8 @@ class LivreController extends Controller
         $file = $request->file('pdf_btn');
 
         if ($file) {
-            // Ajoutez une règle de validation pour la taille maximale du fichier
-            $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
+            
+            $maxFileSize = 50 * 1024;
             $this->validate($request, [
                 'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
             ]);
@@ -58,7 +58,7 @@ class LivreController extends Controller
                 'maisoned'=> $request->maisoned,
                 'datepub'=> $request->datepub,
                 'page'=> $request->page,
-                'url_pdf' => $data['url_file'], // Affecter le chemin du fichier PDF au champ pdf_file
+                'url_pdf' => $data['url_file'],
                 'token' => sha1($request->titre.$request->auteur.time()),
         ]);
         $livre->save();
@@ -109,7 +109,7 @@ class LivreController extends Controller
         }
     }
 
-    // Mettez à jour les autres champs du modèle Resume
+    // Mettre à jour les autres champs du modèle Resume
     $livre->auteur = $request->auteur;
     $livre->titre = $request->titre;
     $livre->soustitre = $request->soustitre;

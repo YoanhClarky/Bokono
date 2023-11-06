@@ -106,7 +106,7 @@ class ResumeController extends Controller
         }
     }
 
-    // Mettez à jour les autres champs du modèle Resume
+    // Mettre à jour les autres champs du modèle Resume
     $resume->designation = $request->designation;
     $resume->cour_id = $request->cour_id;
     $resume->save();

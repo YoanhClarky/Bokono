@@ -11,7 +11,7 @@ class CourController extends Controller
 {
 
     public function index(){
-        $cours = Cour::orderBy('designation','ASC')->paginate(5); // Utilisez la méthode paginate() sur le modèle Livre
+        $cours = Cour::orderBy('designation','ASC')->paginate(5);
         return view('FrontOffice.Cour.recherche')->with(compact('cours'));
     }
 

@@ -45,8 +45,8 @@ class CourController extends Controller
     $file = $request->file('pdf_btn');
 
     if ($file) {
-        // Ajoutez une règle de validation pour la taille maximale du fichier
-        $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
+        //règle de validation pour la taille maximale du fichier
+        $maxFileSize = 50 * 1024;
         $this->validate($request, [
             'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
         ]);
@@ -115,8 +115,7 @@ public function update(Request $request, $id)
 
                 $data['url_pdf'] = 'courpdf/' . $name_with_extension;
             } else {
-                // Gérer le cas où le livre n'est pas trouvé
-                // Vous pouvez rediriger ou afficher un message d'erreur ici
+                //ici je ne mets aucune condition
             }
         }
     }
@@ -128,7 +127,7 @@ public function update(Request $request, $id)
 }
 
     public function creation(){
-        $types = Type::all(); // Assurez-vous d'avoir le modèle et la table "types"
+        $types = Type::all(); 
     $cycles = Cycle::all(); 
         return view('BackOffice.cours.create')->with(compact('types', 'cycles'));
     }

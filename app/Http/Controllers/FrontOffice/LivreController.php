@@ -36,7 +36,7 @@ class LivreController extends Controller
     }
 
     public function show($token){
-        $livre = Livre::where('token',$token)->firstOrfail(); // Utilisez la méthode paginate() sur le modèle Livre
+        $livre = Livre::where('token',$token)->firstOrfail();
         return view('FrontOffice.Livre.show')->with(compact('livre'));
     }
     public function telechargerlivre($id)
@@ -46,11 +46,11 @@ class LivreController extends Controller
         if (!$Livre) {
             abort(404);
         }
-        $telechargement = Tel::firstOrCreate([]); // Récupère le premier enregistrement ou en crée un nouveau s'il n'existe pas
+        $telechargement = Tel::firstOrCreate([]); 
         $telechargement->increment('nbr');
         $timestamp = time();
-        // Vous pouvez également ajouter ici le code pour renvoyer le fichier PDF au téléchargement
-        $pdfPath = public_path($Livre->url_pdf); //z-vous que le chemin du fichier PDF est correct
+     
+        $pdfPath = public_path($Livre->url_pdf); 
         $nomFichierTelechargement = $Livre->titre . " " . $timestamp . ".pdf";
         return response()->download($pdfPath, $nomFichierTelechargement);
     }

@@ -12,7 +12,7 @@ class CourController extends Controller
 {
     public function index(){
         $tels = Tel::All();
-        $items = Courcycle::simplePaginate(5); // Utilisez la méthode paginate() sur le modèle Livre
+        $items = Courcycle::simplePaginate(5); 
         $courfilieres = Courcycle::All();
         return view('YeuxOffice.cour')->with(compact('items','courfilieres','tels'));
     }

@@ -15,11 +15,10 @@ class TeleController extends Controller
     if (!$Livre) {
         abort(404);
     }
-    $telechargement = Tel::firstOrCreate([]); // Récupère le premier enregistrement ou en crée un nouveau s'il n'existe pas
+    $telechargement = Tel::firstOrCreate([]);
     $telechargement->increment('nbr');
     $timestamp = time();
-    // Vous pouvez également ajouter ici le code pour renvoyer le fichier PDF au téléchargement
-    $pdfPath = public_path($Livre->url_pdf); //z-vous que le chemin du fichier PDF est correct
+    $pdfPath = public_path($Livre->url_pdf);
     $nomFichierTelechargement = $Livre->titre . " " . $timestamp . ".pdf";
     return response()->download($pdfPath, $nomFichierTelechargement);
 }
