@@ -77,8 +77,6 @@ class LivreController extends Controller
     //     'cour_id' => 'required|exists:cours,id',
     //     'pdf_btn' => 'nullable|file|max:51200|mimes:pdf', // Limite de 50 Mo pour les fichiers PDF
     // ]);
-
-    // Récupérez l'objet Resume à mettre à jour par son ID
     $livre = Livre::find($id);
     if (!$livre) {
         return redirect('dashboard/livres')->with('error', 'Resume non trouvé.');
