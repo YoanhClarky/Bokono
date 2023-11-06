@@ -9,6 +9,22 @@ use Illuminate\Http\Request;
 
 class ResumeController extends Controller
 {
+
+    public function recherche(Request $request) {
+        $designation = $request->input('designation');
+        
+        // Utilisez $designation pour effectuer votre recherche
+        $resumes = Resume::where('etat', 1)
+            ->where('yeux', 1)
+            ->whereRaw("LOWER(designation) LIKE ?", ["%" . strtolower($designation) . "%"])
+            ->paginate(5);
+    
+        return view('FrontOffice.Resume.recherche', compact('resumes'));
+    }
+    
+    
+
+
     public function index(){
         $resumes = resume::where('etat',1)->where('yeux',1)->paginate(5); // Utilisez la méthode paginate() sur le modèle Livre
         return view('FrontOffice.resumes')->with(compact('resumes'));

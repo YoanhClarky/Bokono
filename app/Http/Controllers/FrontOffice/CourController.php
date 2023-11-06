@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 
 class CourController extends Controller
 {
+
     public function index(){
         $cours = Cour::orderBy('designation','ASC')->paginate(5); // Utilisez la méthode paginate() sur le modèle Livre
-        return view('FrontOffice.cours')->with(compact('cours'));
+        return view('FrontOffice.Cour.recherche')->with(compact('cours'));
     }
 
     public function show($token){

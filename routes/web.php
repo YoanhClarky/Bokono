@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Models\Actualite;
+use App\Models\Commentaire;
 use App\Models\Cycle;
 use App\Models\Tel;
 use Illuminate\Support\Facades\Route;
@@ -18,27 +19,38 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//Commentaires
+Route::post('/comment/store', 'App\Http\Controllers\FrontOffice\CommentaireController@create')->name('commentaire.store');
+
+
 //Livres
 Route::get('/livres','App\Http\Controllers\FrontOffice\LivreController@index');
 Route::get('/livres/show/{token}','App\Http\Controllers\FrontOffice\LivreController@show');
 Route::get('livre/telecharger/{id}', 'App\Http\Controllers\FrontOffice\LivreController@telechargerlivre');
+Route::get('/livres/rechercheAuteur', 'App\Http\Controllers\FrontOffice\LivreController@rechercheA')->name('livres.rechercheA');
+Route::get('/livres/rechercheTitre', 'App\Http\Controllers\FrontOffice\LivreController@rechercheT')->name('livres.rechercheT');
+
 
 //Resumes
 Route::get('/resumes','App\Http\Controllers\FrontOffice\ResumeController@index');
 Route::get('/resumes/show/{token}','App\Http\Controllers\FrontOffice\ResumeController@show');
 Route::get('resume/telecharger/{id}', 'App\Http\Controllers\FrontOffice\ResumeController@telechargerresume');
-
+Route::get('/resumes/recherche', 'App\Http\Controllers\FrontOffice\ResumeController@recherche')->name('resumes.recherche');
 
 //Cours
 Route::get('/cours','App\Http\Controllers\FrontOffice\CourCycleController@index');
 Route::get('/cours/show/{token}','App\Http\Controllers\FrontOffice\CourCycleController@show');
+Route::get('/cours/recherche', 'App\Http\Controllers\FrontOffice\CourCycleController@recherche')->name('cours.recherche');
 Route::get('cour/telecharger/{id}', 'App\Http\Controllers\FrontOffice\CourCycleController@telechargercour');
 
 Route::get('/', function () {
-    $actualites = Actualite::where('etat',1)->get();
-    $cycles=Cycle::All();
-    return view('layout.app')->with(compact('cycles','actualites'));
+    $commentaires = Commentaire::where('actif', 1)->take(5)->get();
+    $actualites = Actualite::where('active', 1)->get();
+    $cycles = Cycle::all();
+    return view('layout.app')->with(compact('cycles', 'actualites', 'commentaires'));
 });
+
 Route::get('/dashboard','App\Http\Controllers\BackOffice\CourController@dashboard')->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

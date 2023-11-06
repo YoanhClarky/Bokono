@@ -11,6 +11,24 @@ use Illuminate\Http\Request;
 
 class CourCycleController extends Controller
 {
+    public function recherche(Request $request) {
+        $designation = $request->input('designation');
+    
+        // Utilisez $designation pour effectuer votre recherche
+        $items = Courcycle::where('etat', 1)
+            ->where('yeux', 1)
+            ->whereHas('cour', function ($query) use ($designation) {
+                $query->whereRaw("LOWER(designation) LIKE ?", ["%" . strtolower($designation) . "%"]);
+            })
+            ->orderBy('cycle_id', 'ASC')
+            ->get();
+    
+        $courfilieres = Courfiliere::all();
+    
+        return view('FrontOffice.Cour.recherche')->with(compact('items', 'courfilieres'));
+    }
+    
+    
     public function index(){
         $items = Courcycle::where('etat',1)->where('yeux',1)->orderBy('cycle_id','ASC')->get(); // Utilisez la méthode paginate() sur le modèle Livre
         $courfilieres = Courfiliere::All();

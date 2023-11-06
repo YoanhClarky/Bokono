@@ -38,7 +38,7 @@ https://templatemo.com/tm-547-real-dynamic
                 <div class="row">
                     <div class="col-lg-4 tm-site-header-left">
                         <h1 class="text-uppercase tm-site-name">BOKONO ETUDE</h1>
-                        <p class="text-white mb-0 tm-site-desc">ETUDIER PLUS FACILEMENT</p>
+                        {{-- <p class="text-white mb-0 tm-site-desc">ETUDIER PLUS FACILEMENT</p> --}}
                     </div>
                     <div class="col-lg-8 tm-site-header-right">
                         <!--Navbar-->
@@ -75,8 +75,36 @@ https://templatemo.com/tm-547-real-dynamic
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
-    <div class="tm-container bg-white">
+    <div class="tm-container bg-white pt-4">
         {{-- <div class="tm-header-stripe w-100"></div> --}}
+        <!-- Recherche par titre de livre -->
+<div class="row">
+    <div class="col-lg-6 mb-3">
+        <form action="{{ route('livres.rechercheT') }}" method="get">
+            @csrf
+            <div class="input-group">
+                <input type="text" name="titre" id="rechercheTitre" class="form-control" placeholder="Rechercher par Titres">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Recherche par nom de l'auteur -->
+    <div class="col-lg-6 mb-3">
+        <form action="{{ route('livres.rechercheA') }}" method="get">
+            @csrf
+            <div class="input-group">
+                <input type="text" name="auteur" id="rechercheAuteur" class="form-control" placeholder="Rechercher par Auteurs">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
         <div class="container-fluid mb-4">
             <div class="row tm-mb-7 justify-content-center">
                 <div class="col-lg-12">

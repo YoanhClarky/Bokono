@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="{{ asset('book-solid.svg') }}">
     <title>Bokono etude</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
     <link href="{{asset('template/css/bootstrap.min.css')}}" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
@@ -37,6 +38,7 @@ https://templatemo.com/tm-547-real-dynamic
                 <div class="row">
                     <div class="col-lg-4 tm-site-header-left">
                         <h1 class="text-uppercase tm-site-name">BOKONO ETUDE</h1>
+                        {{-- <p class="text-white mb-0 tm-site-desc">ETUDIER PLUS FACILEMENT</p> --}}
                     </div>
                     <div class="col-lg-8 tm-site-header-right">
                         <!--Navbar-->
@@ -50,35 +52,18 @@ https://templatemo.com/tm-547-real-dynamic
                             <div class="collapse navbar-collapse tm-nav" id="navbarNav">
                                 <!-- Links -->
                                 <ul class="navbar-nav ml-auto">
-                                    {{-- <li class="nav-item">
+                                    <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                                     </li>
-                                    <li class="nav-item ">
+                                    <li class="nav-item active">
                                         <a class="nav-link tm-nav-link" href="/livres">Livres</a>
-                                    </li> --}}
-                                    {{-- <li class="nav-item">
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="/resumes">Résumés</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link tm-nav-link" href="/cours">Cours</a>
-                                    </li> --}}
-                                    @auth <!-- Vérifiez si l'utilisateur est connecté -->
-                                    <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            Déconnexion
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
                                     </li>
-                                @else
-                                    <li class="nav-item">
-                                        <a class="nav-link tm-nav-link" href="{{ route('login') }}">
-                                            Se connecter
-                                        </a>
-                                    </li>
-                                @endauth
-                                
                                 </ul>
                                 <!-- Links -->
                             </div>
@@ -90,9 +75,25 @@ https://templatemo.com/tm-547-real-dynamic
             </div> <!-- container fluid -->
         </div> <!-- tm-site-header-overlay -->
     </div>
-    <div class="tm-container bg-white">
-        <div class="tm-header-stripe w-100"></div>
-        <div class="container-fluid mt-4 mb-4">
+    <div class="tm-container bg-white pt-4">
+        {{-- <div class="tm-header-stripe w-100"></div> --}}
+        <!-- Recherche par titre de livre -->
+<div class="row">
+    <!-- Recherche par nom de l'auteur -->
+    <div class="col-lg-6 mb-3">
+        <form action="{{ route('livres.rechercheT') }}" method="get">
+            @csrf
+            <div class="input-group">
+                <input type="text" name="titre" id="rechercheTitre" class="form-control" placeholder="Rechercher par Titres">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+        <div class="container-fluid mb-4">
             <div class="row tm-mb-7 justify-content-center">
                 <div class="col-lg-12">
                     <table class="table table-striped table-bordered table-hover">
@@ -102,12 +103,24 @@ https://templatemo.com/tm-547-real-dynamic
                             </tr>
                         </thead>
                         <tbody>
-                            Backoffice
+                            @foreach($livres as $item)
+                            <tr>
+                                <td>
+                                    <a href="/livres/show/{{ $item->token }}" class="table-link">
+                                        <i class="fas fa-book"></i> {{ " - ".$item->titre.", ".$item->soustitre.", ed: ".$item->edition}}
+                                    </a>
+                                </td>
+                            </tr>
+                            
+                            @endforeach
                             <!-- Ajoutez d'autres lignes pour plus de livres -->
                         </tbody>
                     </table>
                     
                 </div>
+                {{-- <div class="d-flex justify-content-center mt-4">
+                    {{$livres->links()}}
+                </div> --}}
             </div>
         </div>
             
