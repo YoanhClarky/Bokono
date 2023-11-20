@@ -12,9 +12,9 @@ class CourController extends Controller
 {
     public function index(){
         $tels = Tel::All();
-        $items = Courcycle::All(); 
+        $items = Courcycle::simplePaginate(5); 
         $courfilieres = Courcycle::All();
-        return response()->json($tels, $items);
+        return view('YeuxOffice.cour')->with(compact('items','courfilieres','tels'));
     }
 
     public function supprimer($id) {
