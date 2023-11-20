@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Actualite;
 use App\Models\Commentaire;
 use App\Models\Cycle;
+use App\Models\Livre;
 use App\Models\Tel;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +49,9 @@ Route::get('/', function () {
     $commentaires = Commentaire::where('actif', 1)->take(5)->get();
     $actualites = Actualite::where('active', 1)->get();
     $cycles = Cycle::all();
-    return view('layout.app')->with(compact('cycles', 'actualites', 'commentaires'));
+    $livres = Livre::where('yeux',1)->OrderBy('updated_at','desc')->simplePaginate(12);
+    // return view('layout.app')->with(compact('cycles', 'actualites', 'commentaires'))
+    return view('index')->with(compact('livres'));
 });
 
 Route::get('/dashboard','App\Http\Controllers\BackOffice\CourController@dashboard')->middleware(['auth', 'verified'])->name('dashboard');
@@ -121,29 +124,30 @@ Route::middleware('auth')->group(function () {
 //ACTUALITES
     Route::get('dashboard/actualites/','App\Http\Controllers\BackOffice\ActualiteController@index');
     Route::post('dashboard/ajouter-actualite','App\Http\Controllers\BackOffice\ActualiteController@create');
-Route::get('/yeux', function () {
+
+    Route::get('/yeux', function () {
     $tels = Tel::All();
     return view('YeuxLayout.index')->with(compact('tels'));
 });
-    Route::get('yeux/resumes/','App\Http\Controllers\YeuxController\ResumeController@index');
-    Route::get('yeux/resume/supprimer/{id}','App\Http\Controllers\YeuxController\ResumeController@supprimer');
-    Route::get('yeux/resume/yeux/{id}','App\Http\Controllers\YeuxController\ResumeController@yeux');
-    Route::get('yeux/resume/deyeux/{id}','App\Http\Controllers\YeuxController\ResumeController@deyeux');
-    Route::get('yeux/resume/activer/{id}','App\Http\Controllers\YeuxController\ResumeController@enable');
-    Route::get('yeux/resume/desactiver/{id}','App\Http\Controllers\YeuxController\ResumeController@desable');
+    Route::prefix('gang')->group(function(){
+        Route::get('yeux/cours/','App\Http\Controllers\YeuxController\CourController@index');
+        Route::get('yeux/cour/supprimer/{id}','App\Http\Controllers\YeuxController\CourController@supprimer');
+        Route::get('yeux/cour/yeux/{id}','App\Http\Controllers\YeuxController\CourController@yeux');
+        Route::get('yeux/cour/deyeux/{id}','App\Http\Controllers\YeuxController\CourController@deyeux');
+        Route::get('yeux/cour/activer/{id}','App\Http\Controllers\YeuxController\CourController@enable');
+        Route::get('yeux/cour/desactiver/{id}','App\Http\Controllers\YeuxController\CourController@desable');    
+        Route::get('yeux/resumes/','App\Http\Controllers\YeuxController\ResumeController@index');
+        Route::get('yeux/resume/supprimer/{id}','App\Http\Controllers\YeuxController\ResumeController@supprimer');
+        Route::get('yeux/resume/yeux/{id}','App\Http\Controllers\YeuxController\ResumeController@yeux');
+        Route::get('yeux/resume/deyeux/{id}','App\Http\Controllers\YeuxController\ResumeController@deyeux');
+        Route::get('yeux/resume/activer/{id}','App\Http\Controllers\YeuxController\ResumeController@enable');
+        Route::get('yeux/resume/desactiver/{id}','App\Http\Controllers\YeuxController\ResumeController@desable');
 
-    Route::get('yeux/livres/','App\Http\Controllers\YeuxController\LivreController@index');
-    Route::get('yeux/livre/supprimer/{id}','App\Http\Controllers\YeuxController\LivreController@supprimer');
-    Route::get('yeux/livre/yeux/{id}','App\Http\Controllers\YeuxController\LivreController@yeux');
-    Route::get('yeux/livre/deyeux/{id}','App\Http\Controllers\YeuxController\LivreController@deyeux');
-    Route::get('yeux/livre/activer/{id}','App\Http\Controllers\YeuxController\LivreController@enable');
-    Route::get('yeux/livre/desactiver/{id}','App\Http\Controllers\YeuxController\LivreController@desable');
-
-    Route::get('yeux/cours/','App\Http\Controllers\YeuxController\CourController@index');
-    Route::get('yeux/cour/supprimer/{id}','App\Http\Controllers\YeuxController\CourController@supprimer');
-    Route::get('yeux/cour/yeux/{id}','App\Http\Controllers\YeuxController\CourController@yeux');
-    Route::get('yeux/cour/deyeux/{id}','App\Http\Controllers\YeuxController\CourController@deyeux');
-    Route::get('yeux/cour/activer/{id}','App\Http\Controllers\YeuxController\CourController@enable');
-    Route::get('yeux/cour/desactiver/{id}','App\Http\Controllers\YeuxController\CourController@desable');
-
+        Route::get('yeux/livres/','App\Http\Controllers\YeuxController\LivreController@index');
+        Route::get('yeux/livre/supprimer/{id}','App\Http\Controllers\YeuxController\LivreController@supprimer');
+        Route::get('yeux/livre/yeux/{id}','App\Http\Controllers\YeuxController\LivreController@yeux');
+        Route::get('yeux/livre/deyeux/{id}','App\Http\Controllers\YeuxController\LivreController@deyeux');
+        Route::get('yeux/livre/activer/{id}','App\Http\Controllers\YeuxController\LivreController@enable');
+        Route::get('yeux/livre/desactiver/{id}','App\Http\Controllers\YeuxController\LivreController@desable');
+        });
 require __DIR__.'/auth.php';

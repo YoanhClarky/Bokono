@@ -46,10 +46,11 @@ class CourController extends Controller
 
     if ($file) {
         //règle de validation pour la taille maximale du fichier
-        $maxFileSize = 50 * 1024;
-        $this->validate($request, [
-            'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
-        ]);
+        $maxFileSize = 800 * 1024; // 800 Mo
+
+    $this->validate($request, [
+        'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
+    ]);
 
         $ext = $file->getClientOriginalExtension();
         $arr_ext = ['pdf'];

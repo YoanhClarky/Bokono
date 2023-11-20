@@ -23,7 +23,8 @@ class LivreController extends Controller
 
         if ($file) {
             
-            $maxFileSize = 50 * 1024;
+            $maxFileSize = 800 * 1024; // 800 Mo
+
             $this->validate($request, [
                 'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
             ]);

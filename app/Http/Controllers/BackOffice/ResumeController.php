@@ -28,7 +28,7 @@ class ResumeController extends Controller
 
         if ($file) {
             // Ajoutez une règle de validation pour la taille maximale du fichier
-            $maxFileSize = 50 * 1024; // Limite de 50 Mo en kilo-octets
+            $maxFileSize = 800 * 1024; // 800 Mo
             $this->validate($request, [
                 'pdf_btn' => 'required|file|max:' . $maxFileSize . '|mimes:pdf',
             ]);
