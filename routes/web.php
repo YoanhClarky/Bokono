@@ -3,11 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Models\Actualite;
 use App\Models\Commentaire;
-use App\Models\Cycle;
+use App\Models\Resume;
 use App\Models\Livre;
+use App\Models\Courcycle;
 use App\Models\Tel;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SearchController;
 
 
 /*
@@ -20,6 +21,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+
+Route::get('/search', [SearchController::class, 'search']);
+
 
 //Commentaires
 Route::post('/comment/store', 'App\Http\Controllers\FrontOffice\CommentaireController@create')->name('commentaire.store');
@@ -46,12 +52,10 @@ Route::get('/cours/recherche', 'App\Http\Controllers\FrontOffice\CourCycleContro
 Route::get('cour/telecharger/{id}', 'App\Http\Controllers\FrontOffice\CourCycleController@telechargercour');
 
 Route::get('/', function () {
-    $commentaires = Commentaire::where('actif', 1)->take(5)->get();
-    $actualites = Actualite::where('active', 1)->get();
-    $cycles = Cycle::all();
-    $livres = Livre::where('yeux',1)->OrderBy('updated_at','desc')->simplePaginate(12);
-    // return view('layout.app')->with(compact('cycles', 'actualites', 'commentaires'))
-    return view('index')->with(compact('livres'));
+    $cours = Courcycle::limit(0);
+    $livres = Livre::limit(0);
+    $resumes = Resume::limit(0);
+    return view('index')->with(compact('livres','cours','resumes'));
 });
 
 Route::get('/dashboard','App\Http\Controllers\BackOffice\CourController@dashboard')->middleware(['auth', 'verified'])->name('dashboard');

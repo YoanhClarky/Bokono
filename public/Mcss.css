@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+.search-container {
+background-image: url('https://source.unsplash.com/random'); /* Utilisation d'une image aléatoire d'Unsplash */
+background-size: cover;
+background-position: center;
+padding: 20px;
+margin-bottom: 20px;
+text-align: center;
+}
+
+
+.search-input {
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.search-btn {
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.col-md-4 {
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .col-md-3 {
+        width: 100%;
+    }
+}
+
+.book-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.book-header img {
+    width: 100%;
+    height: auto;
+}
+
+.book-body {
+    padding: 15px;
+}
+
+.book-title,
+.book-st {
+    margin: 0;
+}
